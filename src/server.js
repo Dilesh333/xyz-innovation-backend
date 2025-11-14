@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 5001;
 // CORS
 app.use(cors({
   origin: process.env.CORS_ORIGIN || true,
-  credentials: true,
+  credentials: true, 
 }));
 
 // JSON BODY
