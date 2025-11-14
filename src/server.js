@@ -56,6 +56,16 @@ async function ensureDbConnection() {
 }
 
 export default async function handler(req, res) {
-  await ensureDbConnection();
-  return app(req, res);
+  try {
+    await ensureDbConnection();
+    return app(req, res);
+  } catch (error) {
+    console.error("Request handling error:", error);
+    if (!res.headersSent) {
+      res.status(500).json({
+        error: "Internal server error",
+        message: process.env.NODE_ENV === "development" ? String(error) : undefined,
+      });
+    }
+  }
 }
